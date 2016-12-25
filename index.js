@@ -232,10 +232,13 @@ SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback
 	var self = this;
 
 	this.getCollection(collectionName, function(err, collection) {
+		console.log('getSnapshot 2');
 		if (err) return callback(err);
 
 		var projection = getProjection(fields);
+		console.log('getSnapshot 3');
 		collection.document(id, function(err, doc) {
+			console.log('getSnapshot 4', err);
 
 			if (err) {
 				// 1202 is "document not found"
@@ -250,11 +253,14 @@ SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback
 				}
 			}
 
+			console.log('getSnapshot 5', err);
+
 			if (err) {
 				callback(error(err));
 			}
 			else {
 				var snapshot = doc ? castToProjectedSnapshot(doc, projection) : new ArangoSnapshot(id, 0, null, null);
+				console.log('getSnapshot 6');
 
 				callback(null, snapshot);
 			}
