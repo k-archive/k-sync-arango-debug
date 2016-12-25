@@ -237,34 +237,36 @@ SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback
 
 		var projection = getProjection(fields);
 		console.log('getSnapshot 3 .... .... ....', id);
-		collection.document(id, function(err, doc) {
-			console.log('getSnapshot 4', err);
+		try {
+			collection.document(id, function(err, doc) {
+				console.log('getSnapshot 4', err);
 
-			if (err) {
-				// 1202 is "document not found"
-				// 1203 is "collection not found"
-				// in that case we'll create the collection and return empty array
-				if (err.errorNum === 1203) {
-					// create the missing collection and try again
-					return self.createCollection(collectionName, function() { self.getSnapshot(collectionName, id, fields, callback); });
+				if (err) {
+					// 1202 is "document not found"
+					// 1203 is "collection not found"
+					// in that case we'll create the collection and return empty array
+					if (err.errorNum === 1203) {
+						// create the missing collection and try again
+						return self.createCollection(collectionName, function() { self.getSnapshot(collectionName, id, fields, callback); });
+					}
+					else if (err.errorNum === 1202) {
+						err = doc = null;
+					}
 				}
-				else if (err.errorNum === 1202) {
-					err = doc = null;
+
+				console.log('getSnapshot 5', err);
+
+				if (err) {
+					callback(error(err));
 				}
-			}
+				else {
+					var snapshot = doc ? castToProjectedSnapshot(doc, projection) : new ArangoSnapshot(id, 0, null, null);
+					console.log('getSnapshot 6');
 
-			console.log('getSnapshot 5', err);
-
-			if (err) {
-				callback(error(err));
-			}
-			else {
-				var snapshot = doc ? castToProjectedSnapshot(doc, projection) : new ArangoSnapshot(id, 0, null, null);
-				console.log('getSnapshot 6');
-
-				callback(null, snapshot);
-			}
-		});
+					callback(null, snapshot);
+				}
+			});
+		} catch (err) { console.log(err); }
 	});
 };
 
