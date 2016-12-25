@@ -111,7 +111,7 @@ SyncArango.prototype.getCollectionPoll = function(collectionName, callback) { co
 	this._getCollectionPoll(collectionName, callback);
 };
 
-SyncArango.prototype.getDbs = function(callback) { console.log('SyncArango.getDbs')
+SyncArango.prototype.getDbs = function(callback) { console.log('SyncArango.getDbs', this.closed, this.arango)
 	if (this.closed) {
 		var err = {code: 5101, message: 'Already closed'};
 		return callback(err);
