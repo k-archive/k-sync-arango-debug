@@ -228,7 +228,7 @@ SyncArango.prototype._writeSnapshot = function(collectionName, id, snapshot, opL
 
 // **** Snapshot methods
 
-SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback) { console.log('SyncArango.getSnapshot')
+SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback) { console.log('SyncArango.getSnapshot', collectionName, id)
 	var self = this;
 
 	this.getCollection(collectionName, function(err, collection) {
@@ -236,7 +236,7 @@ SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback
 		if (err) return callback(err);
 
 		var projection = getProjection(fields);
-		console.log('getSnapshot 3');
+		console.log('getSnapshot 3', id);
 		collection.document(id, function(err, doc) {
 			console.log('getSnapshot 4', err);
 
