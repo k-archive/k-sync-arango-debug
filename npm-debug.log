@@ -1,0 +1,95 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@2.14.12
+3 info using node@v4.3.2
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/src/k-sync-arango-debug',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /home/ile/.npm/k-sync-arango-debug/0.6.9/package.tgz not in flight; packing
+9 verbose tar pack [ '/home/ile/.npm/k-sync-arango-debug/0.6.9/package.tgz',
+9 verbose tar pack   '/src/k-sync-arango-debug' ]
+10 verbose tarball /home/ile/.npm/k-sync-arango-debug/0.6.9/package.tgz
+11 verbose folder /src/k-sync-arango-debug
+12 info prepublish k-sync-arango-debug@0.6.9
+13 verbose addLocalTarball adding from inside cache /home/ile/.npm/k-sync-arango-debug/0.6.9/package.tgz
+14 silly cache afterAdd k-sync-arango-debug@0.6.9
+15 verbose afterAdd /home/ile/.npm/k-sync-arango-debug/0.6.9/package/package.json not in flight; writing
+16 verbose afterAdd /home/ile/.npm/k-sync-arango-debug/0.6.9/package/package.json written
+17 silly publish { name: 'k-sync-arango-debug',
+17 silly publish   version: '0.6.9',
+17 silly publish   description: 'ArangoDB database adapter for livedb',
+17 silly publish   main: 'index.js',
+17 silly publish   dependencies: { async: '*', arangojs: '5.4.1', 'mongo-aql': '*', 'k-sync': '*' },
+17 silly publish   devDependencies: { 'expect.js': '^0.3.1', mocha: '^2.3.3' },
+17 silly publish   scripts: { test: 'mocha --reporter spec test.js' },
+17 silly publish   repository:
+17 silly publish    { type: 'git',
+17 silly publish      url: 'git://github.com/kantele/k-livedb-mongo.git' },
+17 silly publish   author: { name: 'Joseph Gentle and Nate Smith and Ilkka Huotari' },
+17 silly publish   license: 'MIT',
+17 silly publish   readme: '# k-sync-arango\n\nNOTE: this readme needs some work. \n\nArangoDB database adapter for [k-sync](https://github.com/kantele/k-sync) (which is a fork of [k-sync](https://github.com/share/k-sync)). This\ndriver can be used both as a snapshot store and oplog.\n\nSnapshots are stored where you\'d expect (the named collection with _id=id). In\naddition, operations are stored in `ops_COLLECTION`. For example, if you have\na `users` collection, the operations are stored in `ops_users`.\n\nJSON document snapshots in k-sync-arango are unwrapped so you can use arango\nqueries directly against JSON documents. (They just have some extra fields in\nthe form of `_v` and `_type`). It is safe to query documents directly with the\nArangoDB driver or command line. Any read only arango features, including find,\naggregate, and map reduce are safe to perform concurrent with k-sync.\n\nHowever, you must *always* use k-sync to edit documents. Never use the\nArangoDB driver or command line to directly modify any documents that k-sync\nmight create or edit. k-sync must be used to properly persist operations\ntogether with snapshots.\n\n\n## Usage\n\n```js\nvar SyncArango = require(\'k-livedb-arango\')(\'http://root:@localhost:8529/test\');\nvar backend = require(\'k-client\').createBackend({ db: SyncArango });\n```\n\n## Error codes\n\n### todo - check these\n\narango errors are passed back directly. Additional error codes:\n\n#### 4100 -- Bad request - DB\n\n* 4101 -- Invalid op version\n* 4102 -- Invalid collection name\n* 4103 -- $where queries disabled\n* 4104 -- $mapReduce queries disabled\n* 4105 -- $aggregate queries disabled\n\n#### 5100 -- Internal error - DB\n\n* 5101 -- Already closed\n* 5102 -- Snapshot missing last operation field\n* 5103 -- Missing ops from requested version\n\n\n## MIT License\nCopyright (c) 2015 by Joseph Gentle and Nate Smith\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n',
+17 silly publish   readmeFilename: 'README.md',
+17 silly publish   gitHead: 'b58ba0eed681c1c6bdfddea98ef4ec1a140e0b41',
+17 silly publish   bugs: { url: 'https://github.com/kantele/k-livedb-mongo/issues' },
+17 silly publish   homepage: 'https://github.com/kantele/k-livedb-mongo#readme',
+17 silly publish   _id: 'k-sync-arango-debug@0.6.9',
+17 silly publish   _shasum: '3892f4b1a649271c76c641addbb3e6048cd05ec7',
+17 silly publish   _from: '.' }
+18 verbose getPublishConfig undefined
+19 silly mapToRegistry name k-sync-arango-debug
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry uri https://registry.npmjs.org/k-sync-arango-debug
+23 verbose publish registryBase https://registry.npmjs.org/
+24 silly publish uploading /home/ile/.npm/k-sync-arango-debug/0.6.9/package.tgz
+25 verbose request uri https://registry.npmjs.org/k-sync-arango-debug
+26 verbose request sending authorization for write operation
+27 info attempt registry request try #1 at 7:30:09 PM
+28 verbose request using bearer token for auth
+29 verbose request id 1f4ce83b1d427b31
+30 http request PUT https://registry.npmjs.org/k-sync-arango-debug
+31 http 403 https://registry.npmjs.org/k-sync-arango-debug
+32 verbose headers { 'content-type': 'application/json',
+32 verbose headers   'cache-control': 'max-age=300',
+32 verbose headers   'content-length': '95',
+32 verbose headers   'accept-ranges': 'bytes',
+32 verbose headers   date: 'Sun, 25 Dec 2016 17:30:11 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-bma7021-BMA',
+32 verbose headers   'x-cache': 'MISS',
+32 verbose headers   'x-cache-hits': '0',
+32 verbose headers   'x-timer': 'S1482687010.034849,VS0,VE1113',
+32 verbose headers   vary: 'Accept-Encoding' }
+33 verbose request invalidating /home/ile/.npm/registry.npmjs.org/k-sync-arango-debug on PUT
+34 error publish Failed PUT 403
+35 verbose stack Error: "You cannot publish over the previously published version 0.6.9." : k-sync-arango-debug
+35 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+35 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+35 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+35 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+35 verbose stack     at emitTwo (events.js:87:13)
+35 verbose stack     at Request.emit (events.js:172:7)
+35 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1082:10)
+35 verbose stack     at emitOne (events.js:82:20)
+35 verbose stack     at Request.emit (events.js:169:7)
+35 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+36 verbose statusCode 403
+37 verbose pkgid k-sync-arango-debug
+38 verbose cwd /src/k-sync-arango-debug
+39 error Linux 4.4.0-57-generic
+40 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+41 error node v4.3.2
+42 error npm  v2.14.12
+43 error code E403
+44 error "You cannot publish over the previously published version 0.6.9." : k-sync-arango-debug
+45 error If you need help, you may report this error at:
+45 error     <https://github.com/npm/npm/issues>
+46 verbose exit [ 1, true ]
