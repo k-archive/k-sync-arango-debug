@@ -236,7 +236,7 @@ SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback
 		if (err) return callback(err);
 
 		var projection = getProjection(fields);
-		console.log('getSnapshot 3', id);
+		console.log('getSnapshot 3 ....', id);
 		collection.document(id, function(err, doc) {
 			console.log('getSnapshot 4', err);
 
