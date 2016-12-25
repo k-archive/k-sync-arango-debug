@@ -61,7 +61,7 @@ SyncArango.prototype.projectsSnapshots = true;
 /*
 ** We'll be creating collections on the fly, because that's handy.
 */
-SyncArango.prototype.createCollection = function(collectionName, cb){
+SyncArango.prototype.createCollection = function(collectionName, cb){ console.log('SyncArango.createCollection')
 	var self = this;
 
 	this.getDbs(function(err, db) {
@@ -76,7 +76,7 @@ SyncArango.prototype.createCollection = function(collectionName, cb){
 	});
 };
 
-SyncArango.prototype.getCollection = function(collectionName, callback) {
+SyncArango.prototype.getCollection = function(collectionName, callback) { console.log('SyncArango.getCollection')
 	// Check the collection name
 	var err = this.validateCollectionName(collectionName);
 	if (err) return callback(err);
@@ -88,7 +88,7 @@ SyncArango.prototype.getCollection = function(collectionName, callback) {
 	});
 };
 
-SyncArango.prototype._getCollectionPoll = function(collectionName, callback) {
+SyncArango.prototype._getCollectionPoll = function(collectionName, callback) { console.log('SyncArango._getCollectionPoll')
 	// Check the collection name
 	var err = this.validateCollectionName(collectionName);
 	if (err) return callback(err);
@@ -100,7 +100,7 @@ SyncArango.prototype._getCollectionPoll = function(collectionName, callback) {
 	});
 };
 
-SyncArango.prototype.getCollectionPoll = function(collectionName, callback) {
+SyncArango.prototype.getCollectionPoll = function(collectionName, callback) { console.log('SyncArango.getCollectionPoll')
 	if (this.pollDelay) {
 		var self = this;
 		setTimeout(function() {
@@ -111,7 +111,7 @@ SyncArango.prototype.getCollectionPoll = function(collectionName, callback) {
 	this._getCollectionPoll(collectionName, callback);
 };
 
-SyncArango.prototype.getDbs = function(callback) {
+SyncArango.prototype.getDbs = function(callback) { console.log('SyncArango.getDbs')
 	if (this.closed) {
 		var err = {code: 5101, message: 'Already closed'};
 		return callback(err);
@@ -123,7 +123,7 @@ SyncArango.prototype.getDbs = function(callback) {
 	this.pendingConnect.push(callback);
 };
 
-SyncArango.prototype._flushPendingConnect = function() {
+SyncArango.prototype._flushPendingConnect = function() { console.log('SyncArango._flushPendingConnect')
 	var pendingConnect = this.pendingConnect;
 	this.pendingConnect = null;
 	for (var i = 0; i < pendingConnect.length; i++) {
@@ -131,7 +131,7 @@ SyncArango.prototype._flushPendingConnect = function() {
 	}
 };
 
-SyncArango.prototype._connect = function(url, options) {
+SyncArango.prototype._connect = function(url, options) { console.log('SyncArango._connect')
 	var self = this,
 			dbName;
 
@@ -154,7 +154,7 @@ SyncArango.prototype._connect = function(url, options) {
 
 // **** Commit methods
 
-SyncArango.prototype.commit = function(collectionName, id, op, snapshot, callback) {
+SyncArango.prototype.commit = function(collectionName, id, op, snapshot, callback) { console.log('SyncArango.commit')
 	var self = this;
 	this._writeOp(collectionName, id, op, snapshot, function(err, result) {
 		if (err) return callback(err);
@@ -171,7 +171,7 @@ SyncArango.prototype.commit = function(collectionName, id, op, snapshot, callbac
 	});
 };
 
-SyncArango.prototype._writeOp = function(collectionName, id, op, snapshot, callback) {
+SyncArango.prototype._writeOp = function(collectionName, id, op, snapshot, callback) { console.log('SyncArango._writeOp')
 	if (typeof op.v !== 'number') {
 		var err = {
 			code: 4101,
@@ -191,7 +191,7 @@ SyncArango.prototype._writeOp = function(collectionName, id, op, snapshot, callb
 	});
 };
 
-SyncArango.prototype._deleteOp = function(collectionName, opId, callback) {
+SyncArango.prototype._deleteOp = function(collectionName, opId, callback) { console.log('SyncArango._deleteOp')
 	this.getOpCollection(collectionName, function(err, opCollection) {
 		if (err) return callback(err);
 		var promise = opCollection.remove(opId, function(err, result) {
@@ -201,7 +201,7 @@ SyncArango.prototype._deleteOp = function(collectionName, opId, callback) {
 	});
 };
 
-SyncArango.prototype._writeSnapshot = function(collectionName, id, snapshot, opLink, callback) {
+SyncArango.prototype._writeSnapshot = function(collectionName, id, snapshot, opLink, callback) { console.log('SyncArango._writeSnapshot')
 	this.getCollection(collectionName, function(err, collection) {
 		if (err) return callback(err);
 		var doc = castToDoc(id, snapshot, opLink);
@@ -228,7 +228,7 @@ SyncArango.prototype._writeSnapshot = function(collectionName, id, snapshot, opL
 
 // **** Snapshot methods
 
-SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback) {
+SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback) { console.log('SyncArango.getSnapshot')
 	var self = this;
 
 	this.getCollection(collectionName, function(err, collection) {
@@ -262,7 +262,7 @@ SyncArango.prototype.getSnapshot = function(collectionName, id, fields, callback
 	});
 };
 
-SyncArango.prototype.getSnapshotBulk = function(collectionName, ids, fields, callback) {
+SyncArango.prototype.getSnapshotBulk = function(collectionName, ids, fields, callback) { console.log('SyncArango.getSnapshotBulk')
 	var self = this;
 
 	this.getDbs(function(err, db) {
@@ -311,11 +311,11 @@ SyncArango.prototype.getSnapshotBulk = function(collectionName, ids, fields, cal
 // **** Oplog methods
 
 // Overwrite me if you want to change this behaviour.
-SyncArango.prototype.getOplogCollectionName = function(collectionName) {
+SyncArango.prototype.getOplogCollectionName = function(collectionName) { console.log('SyncArango.getOplogCollectionName')
 	return 'ops_' + collectionName;
 };
 
-SyncArango.prototype.validateCollectionName = function(collectionName) {
+SyncArango.prototype.validateCollectionName = function(collectionName) { console.log('SyncArango.validateCollectionName')
 	if (
 		typeof collectionName !== 'string' ||
 		collectionName === 'system' || (
@@ -331,7 +331,7 @@ SyncArango.prototype.validateCollectionName = function(collectionName) {
 };
 
 // Get and return the op collection from mongo, ensuring it has the op index.
-SyncArango.prototype.getOpCollection = function(collectionName, callback) {
+SyncArango.prototype.getOpCollection = function(collectionName, callback) { console.log('SyncArango.getOpCollection')
 	var self = this;
 	this.getDbs(function(err, db) {
 		if (err) return callback(err);
@@ -365,7 +365,7 @@ SyncArango.prototype.getOpCollection = function(collectionName, callback) {
 	});
 };
 
-SyncArango.prototype.getOpsToSnapshot = function(collectionName, id, from, snapshot, callback) {
+SyncArango.prototype.getOpsToSnapshot = function(collectionName, id, from, snapshot, callback) { console.log('SyncArango.getOpsToSnapshot')
 	if (snapshot._opLink == null) {
 		var err = getSnapshotOpLinkError(collectionName, id);
 		return callback(err);
@@ -379,7 +379,7 @@ SyncArango.prototype.getOpsToSnapshot = function(collectionName, id, from, snaps
 	});
 };
 
-SyncArango.prototype.getOps = function(collectionName, id, from, to, callback) {
+SyncArango.prototype.getOps = function(collectionName, id, from, to, callback) { console.log('SyncArango.getOps')
 	var self = this;
 
 	this._getSnapshotOpLink(collectionName, id, function(err, doc) {
@@ -403,7 +403,7 @@ SyncArango.prototype.getOps = function(collectionName, id, from, to, callback) {
 	});
 };
 
-SyncArango.prototype.getOpsBulk = function(collectionName, fromMap, toMap, callback) {
+SyncArango.prototype.getOpsBulk = function(collectionName, fromMap, toMap, callback) { console.log('SyncArango.getOpsBulk')
 	var self = this,
 			ids = Object.keys(fromMap);
 
@@ -557,7 +557,7 @@ function getLinkedOps(ops, to, link) {
 	return linkedOps;
 }
 
-SyncArango.prototype._getOps = function(collectionName, id, from, callback) {
+SyncArango.prototype._getOps = function(collectionName, id, from, callback) { console.log('SyncArango._getOps')
 	var self = this;
 
 	this.getDbs(function(err, db) {
@@ -613,7 +613,7 @@ SyncArango.prototype._getOps = function(collectionName, id, from, callback) {
 	});
 };
 
-SyncArango.prototype._getOpsBulk = function(collectionName, conditions, callback) {
+SyncArango.prototype._getOpsBulk = function(collectionName, conditions, callback) { console.log('SyncArango._getOpsBulk')
 	var self = this;
 
 	this.getDbs(function(err, db) {
@@ -673,7 +673,7 @@ function readOpsBulk(cursor, opsMap, id, ops, callback) {
 	});
 }
 
-SyncArango.prototype._getSnapshotOpLink = function(collectionName, id, callback) {
+SyncArango.prototype._getSnapshotOpLink = function(collectionName, id, callback) { console.log('SyncArango._getSnapshotOpLink')
 	var self = this;
 
 	this.getCollection(collectionName, function(err, collection) {
@@ -692,7 +692,7 @@ SyncArango.prototype._getSnapshotOpLink = function(collectionName, id, callback)
 	});
 };
 
-SyncArango.prototype._getSnapshotOpLinkBulk = function(collectionName, ids, callback) {
+SyncArango.prototype._getSnapshotOpLinkBulk = function(collectionName, ids, callback) { console.log('SyncArango._getSnapshotOpLinkBulk')
 	var self = this;
 
 	this.getDbs(function(err, db) {
@@ -730,7 +730,7 @@ SyncArango.prototype._getSnapshotOpLinkBulk = function(collectionName, ids, call
 };
 
 
-SyncArango.prototype.query = function(collectionName, inputQuery, fields, options, callback) {
+SyncArango.prototype.query = function(collectionName, inputQuery, fields, options, callback) { console.log('SyncArango.query')
 	var self = this;
 	var normalizedInputQuery = normalizeQuery(inputQuery);
 
@@ -769,7 +769,7 @@ SyncArango.prototype.query = function(collectionName, inputQuery, fields, option
 	});
 };
 
-SyncArango.prototype.queryPoll = function(collectionName, inputQuery, options, callback) {
+SyncArango.prototype.queryPoll = function(collectionName, inputQuery, options, callback) { console.log('SyncArango.queryPoll')
 	var self = this;
 
 	normalizedInputQuery = normalizeQuery(inputQuery);
@@ -817,7 +817,7 @@ function sortResultsByIds(results, ids) {
 	results.sort(fn);
 }
 
-SyncArango.prototype.queryPollDoc = function(collectionName, id, query, options, callback) {
+SyncArango.prototype.queryPollDoc = function(collectionName, id, query, options, callback) { console.log('SyncArango.queryPollDoc')
 	var self = this;
 
 	query = normalizeQuery(query);
@@ -883,7 +883,7 @@ SyncArango.prototype.queryPollDoc = function(collectionName, id, query, options,
 // **** Polling optimization
 
 // Can we poll by checking the query limited to the particular doc only?
-SyncArango.prototype.canPollDoc = function(collectionName, query) {
+SyncArango.prototype.canPollDoc = function(collectionName, query) { console.log('SyncArango.canPollDoc')
 	return !(
 		query.hasOwnProperty('$orderby') ||
 		query.hasOwnProperty('$limit') ||
@@ -894,7 +894,7 @@ SyncArango.prototype.canPollDoc = function(collectionName, query) {
 
 // Return true to avoid polling if there is no possibility that an op could
 // affect a query's results
-SyncArango.prototype.skipPoll = function(collectionName, id, op, query) {
+SyncArango.prototype.skipPoll = function(collectionName, id, op, query) { console.log('SyncArango.skipPoll')
 	// Livedb is in charge of doing the validation of ops, so at this point we
 	// should be able to assume that the op is structured validly
 	if (op.create || op.del) return false;
@@ -944,7 +944,7 @@ function opContainsAnyField(op, fields) {
 
 // Return error string on error. Query should already be normalized with
 // normalizeQuery below.
-SyncArango.prototype.checkQuery = function(query) {
+SyncArango.prototype.checkQuery = function(query) { console.log('SyncArango.checkQuery')
 	if (!this.allowJSQueries) {
 		if (query.$query.$where != null) {
 			return {code: 4103, message: '$where queries disabled'};
@@ -967,7 +967,7 @@ SyncArango.prototype.checkQuery = function(query) {
 // Options can hold a direction (outbound/inbound/any)
 // Returns a list of vertex keys
 // 
-SyncArango.prototype.getNeighbors = function(graphName, vertex, edgeData, options, callback) {
+SyncArango.prototype.getNeighbors = function(graphName, vertex, edgeData, options, callback) { console.log('SyncArango.getNeighbors')
 	var vertexId;
 
 	// "vertex" is of format collection/id, this will return the id
@@ -1010,7 +1010,7 @@ SyncArango.prototype.getNeighbors = function(graphName, vertex, edgeData, option
 };
 
 // edge can be null/undefined
-SyncArango.prototype.getEdge = function(graphName, from, to, edge, options, callback) {
+SyncArango.prototype.getEdge = function(graphName, from, to, edge, options, callback) { console.log('SyncArango.getEdge')
 	var vertexId;
 
 	// "vertex" is of format collection/id, this will return the id
@@ -1048,7 +1048,7 @@ SyncArango.prototype.getEdge = function(graphName, from, to, edge, options, call
 	});
 };
 
-SyncArango.prototype.addEdge = function(graphName, from, to, data, callback) {
+SyncArango.prototype.addEdge = function(graphName, from, to, data, callback) { console.log('SyncArango.addEdge')
 	var edgeCollectionName,
 		self = this;
 
@@ -1099,7 +1099,7 @@ SyncArango.prototype.addEdge = function(graphName, from, to, data, callback) {
 	});
 }
 
-SyncArango.prototype.removeEdge = function(graphName, from, to, data, callback) {
+SyncArango.prototype.removeEdge = function(graphName, from, to, data, callback) { console.log('SyncArango.removeEdge')
 	var edgeCollectionName;
 
 	this.getDbs(function(err, db) {
@@ -1131,7 +1131,7 @@ SyncArango.prototype.removeEdge = function(graphName, from, to, data, callback) 
 // We are removing a vertex from a document collection - this means
 // that we want to remove all the edges that point to/from an edge collection
 // so that there will be no orphaned edges.
-SyncArango.prototype.removeVertex = function(graphName, vertex, callback) {
+SyncArango.prototype.removeVertex = function(graphName, vertex, callback) { console.log('SyncArango.removeVertex')
 	var edgeCollectionName;
 
 	this.getDbs(function(err, db) {
@@ -1161,7 +1161,7 @@ SyncArango.prototype.removeVertex = function(graphName, vertex, callback) {
 	});
 }
 
-SyncArango.prototype.functionFetch = function(aql, params, callback) {
+SyncArango.prototype.functionFetch = function(aql, params, callback) { console.log('SyncArango.functionFetch')
 	var self = this;
 
 	this.getDbs(function(err, db) {
