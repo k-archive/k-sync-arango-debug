@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"dependencies": {
 		"async": "*",
-		"arangojs": "*",
+		"arangojs": "5.4.1",
 		"mongo-aql": "*",
 		"k-sync": "*"
 	},
