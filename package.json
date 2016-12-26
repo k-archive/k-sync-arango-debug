@@ -1,11 +1,11 @@
 {
 	"name": "k-sync-arango-debug",
-	"version": "0.6.19",
+	"version": "0.6.20",
 	"description": "ArangoDB database adapter for livedb",
 	"main": "index.js",
 	"dependencies": {
 		"async": "*",
-		"arangojs-debug": "*",
+		"arangojs": "5.0.3",
 		"mongo-aql": "*",
 		"k-sync": "*"
 	},
