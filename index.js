@@ -1,7 +1,7 @@
 var async = require('async');
 var DB = require('k-sync').DB;
 var mongoAql = require('mongo-aql');
-var arangojs = require('arangojs-debug');
+var arangojs = require('arangojs');
 
 module.exports = SyncArango;
 
