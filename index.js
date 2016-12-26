@@ -147,6 +147,11 @@ SyncArango.prototype._connect = function(url, options) { console.log('SyncArango
 		throw new Error('Database not found: ', dbName);
 	}
 
+	console.log('SyncArango.prototype._connect')
+	console.log(url)
+	console.log(dbName)
+	console.log('------')
+
 	this.arango = new arangojs.Database(url);
 	this.arango.useDatabase(dbName)
 	this._flushPendingConnect();
